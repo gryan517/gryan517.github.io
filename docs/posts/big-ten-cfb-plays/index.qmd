@@ -1,0 +1,95 @@
+---
+title: "Big Ten Plays"
+author: "Gab Ryan"
+date: '2023-10-10'
+format: 
+  html:
+    code-fold: true
+---
+Focus: Create a bar chart showing the average number of offensive plays for each Big Ten football team from the 2022-23 season and the current season
+```{r}
+library(tidyverse)
+library(scales)
+```
+##2022 Data
+```{r}
+fblogs <- read_csv ("https://dwillis.github.io/sports-data-files/footballlogs22.csv")
+```
+```{r}
+big10 <- c("Big Ten Conference")
+
+big10conf <- fblogs |> filter(Conference %in% big10)
+```
+```{r}
+big10conf <- big10conf |> 
+  group_by(Team) |> 
+  summarise(
+    avgoffplays = mean(OffensivePlays)) |> 
+  arrange(desc(avgoffplays))
+```
+
+
+
+```{r}
+ggplot() + 
+  geom_bar(
+    data=big10conf, 
+    aes(x=reorder(Team, avgoffplays), weight=avgoffplays)
+  )
+```
+
+```{r}
+ggplot() + 
+  geom_bar(
+    data=big10conf, 
+    aes(x=reorder(Team, avgoffplays), weight=avgoffplays)
+  ) + 
+  scale_y_continuous(labels=comma) + 
+  labs(
+    title="Big 10 average offensive plays, 2022", 
+    x="Team", 
+    y="Average Offensive Plays") +
+  theme_minimal() +
+  coord_flip()
+```
+##2023 Data 
+
+```{r}
+fblogs2 <- read_csv ("https://dwillis.github.io/sports-data-files/footballlogs23.csv")
+```
+
+```{r}
+big10 <- c("Big Ten Conference")
+big10conf2 <- fblogs2 |> filter(Conference %in% big10)
+```
+```{r}
+big10conf2 <- big10conf2 |> 
+  group_by(Team) |> 
+  summarise(
+    avgoffplays = mean(OffensivePlays)) |> 
+  arrange(desc(avgoffplays))
+```
+
+```{r}
+ggplot() + 
+  geom_bar(
+    data=big10conf2, 
+    aes(x=reorder(Team, avgoffplays), weight=avgoffplays)
+  )
+```
+
+```{r}
+ggplot() + 
+  geom_bar(
+    data=big10conf2, 
+    aes(x=reorder(Team, avgoffplays), weight=avgoffplays)
+  ) + 
+  scale_y_continuous(labels=comma) + 
+  labs(
+    title="Big 10 average offensive plays, 2023", 
+    x="Team", 
+    y="Average Offensive Plays") +
+  theme_minimal() +
+  coord_flip()
+```
+
