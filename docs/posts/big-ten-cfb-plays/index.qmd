@@ -7,7 +7,7 @@ format:
     code-fold: true
 ---
 Focus: Create a bar chart showing the average number of offensive plays for each Big Ten football team from the 2022-23 season and the current season
-```{r}
+```{r, output=false}
 library(tidyverse)
 library(scales)
 ```
