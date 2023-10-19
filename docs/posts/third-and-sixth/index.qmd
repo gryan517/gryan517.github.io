@@ -35,7 +35,7 @@ summarise(
 How many plays were run plays (Rush and Rushing Touchdown)?
 
 ```{r}
-runs <- c("Rush", "Rushing Touchdown")
+runs <- c("Rush")
 
 runplays <- third_and_six |>
   filter(play_type %in% runs) |> 
@@ -55,4 +55,9 @@ While there is an overall trend for college coaches being fired mid season, 2021
 
 While notable increase in rushes is not directly related to changing coaches, it is a relationship worth exploring with the information provided. 
 
+```{r}
+ggplot() + 
+  geom_bar(data=runplays, 
+           aes(x=reorder(year, play_type), weight=total))
+```
 
