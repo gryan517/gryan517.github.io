@@ -1,0 +1,58 @@
+---
+title: "Third and Sixth Runs"
+author: "Gab Ryan"
+date: '2023-10-17'
+format: 
+  html:
+    code-fold: true
+---
+Today we are 
+
+```{r}
+library(tidyverse)
+library(cfbfastR)
+```
+
+Load the play by play data from each season listed 
+```{r}
+plays <- load_cfb_pbp(seasons = c(2019, 2020, 2021, 2022, 2023))
+```
+
+```{r}
+third_and_six <- plays |> filter(down == 3, distance == 6)
+```
+
+Find all plays where the down is 3 and the distance is 6, and save them to a new data frame called third_and_six.
+
+```{r}
+third_and_six |>
+  group_by(play_type, year) |>
+summarise(
+  count = n()
+)
+```
+
+How many plays were run plays (Rush and Rushing Touchdown)?
+
+```{r}
+runs <- c("Rush", "Rushing Touchdown")
+
+runplays <- third_and_six |>
+  filter(play_type %in% runs) |> 
+  group_by(play_type, year)|>
+summarise(
+  total = n()
+)
+```
+
+This Saturday, Maryland's homecoming game became a rapid defeat when they ran the ball on the third and sixth. These running plays are defined by rushes and rushing touchdowns.
+
+There was an exponential spike in rushes in 2022 which grew from 483 in 2021 to 748 in 2022.In previous years, the amount of running plays has been fairly stable. 
+
+While there is an overall trend for college coaches being fired mid season, 2021-2022 still remains to be a significant period to look at. 
+
+"According to ESPN Stats & Information, there have been 36 Power 5 midseason coaching changes (any time before the conclusion of the regular season, not including bowl games) during the College Football Playoff era. Fourteen of those have occurred since the start of the 2021 season," as according to ESPN. 
+
+While notable increase in rushes is not directly related to changing coaches, it is a relationship worth exploring with the information provided. 
+
+
