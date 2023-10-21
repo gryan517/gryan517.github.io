@@ -19,14 +19,14 @@ plays <- load_cfb_pbp(seasons = c(2019, 2020, 2021, 2022, 2023))
 ```
 
 ```{r}
-third_and_six <- plays |> filter(down == 3, distance == 6)
+third_and_six <- plays |> filter(down == 3, distance == 6) |> filter(pos_team == "Maryland")
 ```
 
 Find all plays where the down is 3 and the distance is 6, and save them to a new data frame called third_and_six.
 
 ```{r}
 third_and_six |>
-  group_by(play_type, year) |>
+  group_by(play_type, year, pos_team) |>
 summarise(
   count = n()
 )
@@ -39,7 +39,7 @@ runs <- c("Rush")
 
 runplays <- third_and_six |>
   filter(play_type %in% runs) |> 
-  group_by(play_type, year)|>
+  group_by(play_type, year, pos_team)|>
 summarise(
   total = n()
 )
