@@ -38,8 +38,12 @@ How many plays were run plays (Rush and Rushing Touchdown)?
 runs <- c("Rush")
 
 runplays <- third_and_six |>
-  filter(play_type %in% runs) |> 
-  group_by(play_type, year, pos_team)|>
+  filter(play_type %in% runs) |>
+```
+
+
+```{r}
+group_by(play_type, year, pos_team)|>
 summarise(
   total = n()
 )
